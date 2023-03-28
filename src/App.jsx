@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import NavBar from './components/NavBar'
+const API_KEY = import.meta.env.VITE_API_KEY
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  console.log(API_KEY)
   return (
     <div className="App">
-      
+      <NavBar />
     </div>
   )
 }
