@@ -1,54 +1,109 @@
 import {
-  Heading,
-  Button,
-  Stack,
-  Image,
-  Text,
-  Box,
-  Flex,
-  Grid,
-  SimpleGrid,
+    Heading,
+    Button,
+    Stack,
+    Image,
+    Text,
+    Box,
+    Flex,
+    Grid,
+    SimpleGrid,
+    AspectRatio,
+    GridItem
 } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
-function Discover({ discover }) {
-  return (
-    <Flex justifyContent='center'>
-    <SimpleGrid minChildWidth='150px' spacing='1em'  px='1em' py='1.5em'>
-      <DiscoverMovies discover={discover} />
-    </SimpleGrid>
-    </Flex>
-  );
+
+function Discover({ discover, renderMini }) {
+    return (
+        <Flex justifyContent="center" alignContent={'center'}>
+            <SimpleGrid
+                minChildWidth={'300px'}
+                spacing={3}
+                alignContent={'center'}
+                px={'1'}
+                py={'3'}
+            >
+                <DiscoverMovies discover={discover} renderMini={renderMini} />
+            </SimpleGrid>
+        </Flex>
+    );
 }
 
-const DiscoverMovies = ({ discover }) => {
-  console.log(discover);
-
-  return discover.map((movie) => (
-    <Grid key={nanoid()} justifyContent='space-between'>
-      <Box>
-        <Image
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt="Green double couch with wooden legs"
-          borderRadius="lg"
-          maxW='100%'
-          height='auto'
-        />
-      </Box>
-      <Stack>
-          <Heading size='sm'>{movie.original_title}</Heading>
-          <Text fontSize={"small"} p='0.4em'>{movie.overview}</Text>
-          <Text color="blue.600" fontSize="1rem">
-            {movie.vote_average}
-          </Text>
-        </Stack>
-      {/* <Divider /> */}
-      <Box>
-          <Button alignSelf='end' variant="solid" colorScheme="green">
-            Add To Collection
-          </Button>
-      </Box>
-    </Grid>
-  ));
+const DiscoverMovies = ({ discover, renderMini }) => {
+    return discover.map((movie) => (
+        <SimpleGrid
+            spacing={2}
+            columns={4}
+            key={nanoid()}
+            py={2}
+            px={{ base: 2 }}
+            justifyItems={"center"}
+            rowGap={2}
+            bg="white"
+            boxShadow="md"
+            borderRadius="md"
+            _hover={{
+                boxShadow: "lg",
+                cursor: "pointer"
+            }}
+            transition="all 0.3s"
+            position="relative"
+            onClick={renderMini}
+        >
+            <GridItem colSpan={1} alignSelf={"center"}>
+                <AspectRatio width={"80px"} ratio={9 / 16} >
+                    <Image
+                        src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                        alt={movie.original_title}
+                        borderRadius="md"
+                        maxW="100%"
+                        height="auto"
+                        data-movie-id={movie["id"]}
+                        objectFit="cover"
+                        onClick={(e) => renderMini(e)}
+                    />
+                </AspectRatio>
+            </GridItem>
+            <GridItem colSpan={3} alignSelf={"center"}>
+                <Stack >
+                    <Heading size={{ base: "xs" }}>{movie.original_title}</Heading>
+                    <Text
+                        wordBreak={"keep-all"}
+                        overflow={"hidden"}
+                        fontSize={{ base: "xs" }}
+                        // h={{ base: "2.4em", md: "3.2em" }}
+                    >
+                        {movie.overview.length > 100
+                            ? movie.overview.slice(0, 200)
+                            : movie.overview}
+                    </Text>
+                    <Flex alignItems={"center"} justifyContent={"space-between"} px={1}>
+                        <Text
+                            borderRadius={3}
+                            width={"max-content"}
+                            backgroundColor={"gray.200"}
+                            p={"0.8em"}
+                            fontWeight={"bold"}
+                            justifySelf={"start"}
+                            color="green.600"
+                            fontSize={{ base: "xs" }}
+                        >
+                            Rating: {movie.vote_average.toFixed(1)}
+                        </Text>
+                        <Button
+                            px={{ base: "0.4em" }}
+                            fontSize={{ base: "xs" }}
+                            alignSelf="end"
+                            variant="outline"
+                            colorScheme="green"
+                        >
+                            Add To Collection
+                        </Button>
+                    </Flex>
+                </Stack>
+            </GridItem>
+        </SimpleGrid>
+    ));
 };
 
 export default Discover;
