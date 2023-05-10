@@ -6,6 +6,7 @@ import Discover from "./components/Discover";
 import {Spinner, Flex, Box} from "@chakra-ui/react";
 import SingleMovie from "./components/SingleMovie";
 import SearchResults from "./components/SearchResults";
+import SimilarMovies from "./components/SimilarMovies.jsx";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const discoverUrl =
@@ -17,19 +18,20 @@ const trendingUrl =
 function App() {
     const [LOADER, SET_LOADER] = useState(false);
     const [discoverData, setDiscoverData] = useState([])
-    const [showDiscover, setShowDiscover] = useState(true)
+    const [showDiscover, setShowDiscover] = useState(false)
     const [searchData, setSearchData] = useState(null)
     const [searchValue, setSearchValue] = useState('')
     const [showResults, setShowResults] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [movieId, setMovieId] = useState(null)
     const [singleMovie, setSingleMovie] = useState(null)
+    const [similarMovie, setSimilarMovie] = useState(null)
     const [showMini, setShowMini] = useState(false)
+
     const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${searchValue}&page=1&include_adult=false`
     const singleMovieURL = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`
-
+    const similarMoviesURL = `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${API_KEY}&language=en-US&page=1`
     //effects and api calls
-
 
     useEffect(() => {
         if (searchValue !== '') {
@@ -58,7 +60,10 @@ function App() {
         } catch (error) {
             console.error(error);
         } finally {
+            setTimeout(() => {
             setIsLoading(false);
+            setShowDiscover(true)
+                  }, 1800);
         }
     }, []);
 
@@ -86,8 +91,10 @@ function App() {
         try {
             if (movieId) {
                 const res = await axios(singleMovieURL);
+                const similar = await  axios(similarMoviesURL)
                 console.log('req')
                 setSingleMovie(res.data);
+                setSimilarMovie(similar.data.results)
                 setShowMini(true); // move setShowMini here
                 setShowResults(false);
                 setShowDiscover(false);
@@ -106,10 +113,14 @@ function App() {
     }, [])
 
     const handleSearch = useCallback(() => {
-        setShowResults(false);
+        setIsLoading(true);
         if (searchData?.length > 0) {
+            setTimeout(() => {
             setShowResults(true);
             setShowDiscover(false);
+            setShowMini(false)
+                setIsLoading(false);
+            }, 1800);
         }
     }, [searchData]);
 
@@ -152,9 +163,10 @@ function App() {
                         <Spinner size="xl" />
                     </Flex>
                 )}
-                {showResults && <SearchResults searchData={searchData} />}
+                {showResults && <SearchResults renderMini={renderMini} searchData={searchData} />}
                 {showDiscover && <Discover renderMini={renderMini} discover={discoverData} />}
-                {showMini && <SingleMovie movie={singleMovie} />}
+                {showMini && <SingleMovie movieId={movieId} movie={singleMovie} />}
+                {showMini && <SimilarMovies movies={similarMovie} renderMini={renderMini} />}
             </Flex>
         </Box>
 
