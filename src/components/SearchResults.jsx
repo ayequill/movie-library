@@ -20,7 +20,7 @@ function SearchResults({searchData, renderMini}) {
     );
 }
 
-const Movies = ({searchData}, renderMini) => {
+const Movies = ({searchData, renderMini}) => {
     return searchData.map((movie) => (
         <SimpleGrid  spacing={2}
                      columns={4}

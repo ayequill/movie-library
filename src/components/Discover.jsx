@@ -4,9 +4,7 @@ import {
     Stack,
     Image,
     Text,
-    Box,
     Flex,
-    Grid,
     SimpleGrid,
     AspectRatio,
     GridItem
@@ -48,7 +46,6 @@ const DiscoverMovies = ({ discover, renderMini }) => {
             }}
             transition="all 0.3s"
             position="relative"
-            onClick={renderMini}
         >
             <GridItem colSpan={1} alignSelf={"center"}>
                 <AspectRatio width={"80px"} ratio={9 / 16} >
