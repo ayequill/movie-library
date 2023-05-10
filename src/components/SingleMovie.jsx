@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {
   SimpleGrid,
   GridItem,
@@ -6,7 +6,7 @@ import {
   Image,
   Text,
   AspectRatio,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 const SingleMovie = ({ movie, movieId }) => {
   const {
@@ -23,7 +23,7 @@ const SingleMovie = ({ movie, movieId }) => {
       columns={[1, null, null, 2]}
       borderRadius="lg"
       overflow="hidden"
-      alignContent={"center"}
+      alignContent="center"
       mt={5}
     >
       <GridItem position="relative" height={0} paddingBottom="56.25%">
@@ -32,8 +32,8 @@ const SingleMovie = ({ movie, movieId }) => {
             src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
             alt={original_title}
             objectFit="cover"
-            maxW={"100%"}
-            display={"none"}
+            maxW="100%"
+            display="none"
           />
         </AspectRatio>
         <AspectRatio
@@ -43,7 +43,7 @@ const SingleMovie = ({ movie, movieId }) => {
           // left={0}
           right={5}
           ratio={9 / 16}
-          width={["80px", null, null, "120px"]}
+          width={['80px', null, null, '120px']}
         >
           <Image
             src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
@@ -60,7 +60,7 @@ const SingleMovie = ({ movie, movieId }) => {
         bgGradient="linear(to-t, blackAlpha.900, transparent)"
         borderRadius="md"
       >
-        <Text color="blackAlpha.700" fontWeight="bold" fontSize="xl" mb={2} textShadow='0px 3px 3px rgba(255,255,255,0.5), 1px 1px 3px rgba(66,59,60,0.24)'>
+        <Text color="blackAlpha.700" fontWeight="bold" fontSize="xl" mb={2} textShadow="0px 3px 3px rgba(255,255,255,0.5), 1px 1px 3px rgba(66,59,60,0.24)">
           {original_title}
         </Text>
         <Box bg="whiteAlpha.800" px={2} py={1} borderRadius="md" mb={2}>
@@ -69,13 +69,15 @@ const SingleMovie = ({ movie, movieId }) => {
           </Text>
         </Box>
         <Text color="white" fontSize="sm" fontWeight="semibold">
-          Release Date:{" "}
+          Release Date:
+          {' '}
           <Box as="span" color="gray.300">
             {release_date}
           </Box>
         </Text>
         <Text color="white" fontSize="sm" fontWeight="semibold">
-          Rating:{" "}
+          Rating:
+          {' '}
           <Box as="span" color="gray.300">
             {vote_average.toFixed(2)}
           </Box>
