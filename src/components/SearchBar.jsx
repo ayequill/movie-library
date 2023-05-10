@@ -1,9 +1,8 @@
 import { Box, Input, InputRightElement, InputGroup } from "@chakra-ui/react";
-import { useCallback } from "react";
 import { Search2Icon } from "@chakra-ui/icons";
 
 export default function SearchBar({getSearchValue, handleSearch}) {
-    
+
   return (
     <Box>
       <InputGroup px={3}>

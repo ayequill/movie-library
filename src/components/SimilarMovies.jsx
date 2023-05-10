@@ -7,7 +7,7 @@ import {
     Flex,
     SimpleGrid,
     AspectRatio,
-    GridItem, Box
+    GridItem
 } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
 

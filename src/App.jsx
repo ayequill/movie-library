@@ -16,7 +16,6 @@ const trendingUrl =
 
 
 function App() {
-    const [LOADER, SET_LOADER] = useState(false);
     const [discoverData, setDiscoverData] = useState([])
     const [showDiscover, setShowDiscover] = useState(false)
     const [searchData, setSearchData] = useState(null)
